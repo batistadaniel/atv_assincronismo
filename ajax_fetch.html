@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bucar CEP - Fetch</title>
+</head>
+<body>
+    <div class="content" style="display: flex; flex-direction: column; width: 200px; gap: 6px">
+        <h1>Bucar CEP</h1>
+
+        <input type="text" name="cep" id="cep" placeholder="Digite seu CEP">
+        <button type="button" onclick="buscarCEP()">Pesquisar CEP</button>
+        <input type="text" id="logradouro" placeholder="Logradouro">
+        <input type="text" id="complemento" placeholder="Complemento">
+        <input type="text" id="bairro" placeholder="Bairro">
+        <input type="text" id="localidade" placeholder="Cidade">
+        <input type="text" id="uf" placeholder="UF">
+    </div>
+
+    <script>
+        function buscarCEP () {
+            let cep =  parseInt(document.getElementById("cep").value); 
+
+            fetch("https://viacep.com.br/ws/"+cep+"/json")
+            
+                .then(resposta => resposta.json())
+                .then(dados => {
+
+                // exibe mudancas no valor
+                document.getElementById("logradouro").value = dados.logradouro;
+                document.getElementById("complemento").value = dados.complemento;
+                document.getElementById("bairro").value = dados.bairro;
+                document.getElementById("localidade").value = dados.localidade;
+                document.getElementById("uf").value = dados.uf;
+            })
+            .catch(erro => {
+                console.log("Erro:", erro);
+            });
+        }
+    </script>
+</body>
+</html>
